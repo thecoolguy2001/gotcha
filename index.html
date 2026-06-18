@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gotcha! — How fast can you prove you're human?</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%234285f4'/%3E%3Cpath d='M8 16.5l5 5L24 11' stroke='%23fff' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="#" data-nav="home" aria-label="Gotcha! home">
+    <span class="logo-mark">
+      <svg viewBox="0 0 32 32" width="26" height="26"><rect width="32" height="32" rx="7" fill="#4285f4"/><path d="M8 16.5l5 5L24 11" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="logo-word"><b class="c-blue">G</b><b class="c-red">o</b><b class="c-yellow">t</b><b class="c-blue">c</b><b class="c-green">h</b><b class="c-red">a</b><b class="c-green">!</b></span>
+  </a>
+
+  <div class="hud" id="hud" hidden>
+    <div class="hud-progress" id="hud-dots" aria-label="Round progress"></div>
+    <div class="hud-timer" id="hud-timer">0:00.0</div>
+    <button class="text-btn hud-quit" id="btn-quit">Quit</button>
+  </div>
+
+  <nav class="topnav" id="topnav">
+    <button class="text-btn" data-nav="board">Leaderboard</button>
+    <button class="filled-btn" data-nav="home" id="nav-play">Play</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section class="screen screen-home" id="screen-home">
+    <div class="hero">
+      <h1 class="hero-logo" aria-label="Gotcha!">
+        <span class="c-blue">G</span><span class="c-red">o</span><span class="c-yellow">t</span><span class="c-blue">c</span><span class="c-green">h</span><span class="c-red">a</span><span class="bang" aria-hidden="true"><i></i><svg viewBox="0 0 24 24"><path d="M4 13l5 5L20 7" stroke="#34a853" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </h1>
+      <p class="hero-tag">How fast can you prove you're human?</p>
+      <p class="hero-sub">Solve <b>10 captchas</b> back-to-back. The clock never stops. Wrong answers cost you time.</p>
+
+      <!-- The anchor widget IS the start button -->
+      <div class="anchor-wrap">
+        <div class="anchor" id="anchor" role="button" tabindex="0" aria-label="Start the game — I'm not a robot">
+          <div class="anchor-box" id="anchor-box"><div class="anchor-check" id="anchor-check"></div></div>
+          <div class="anchor-label">I'm not a robot</div>
+          <div class="anchor-brand">
+            <svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true">
+              <path fill="#1c3aa9" d="M44 24v-13l-4.9 4.9A19.9 19.9 0 0 0 24 4 20 20 0 0 0 5.3 17h7.1A13.5 13.5 0 0 1 24 10.5c3.6 0 6.9 1.4 9.3 3.8L28 19.6h16z"/>
+              <path fill="#4285f4" d="M24 44a20 20 0 0 0 18.7-13h-7.1A13.5 13.5 0 0 1 24 37.5c-3.6 0-6.9-1.4-9.3-3.8L20 28.4H4V41l4.9-4.9A19.9 19.9 0 0 0 24 44z"/>
+              <path fill="#ababab" d="M4 24v4.4h16L14.7 33A13.4 13.4 0 0 1 10.5 24c0-1.6.3-3.1.8-4.5l-5.5-3A19.8 19.8 0 0 0 4 24z"/>
+            </svg>
+            <span class="anchor-brand-name">Gotcha!</span>
+            <span class="anchor-brand-legal">Privacy&nbsp;·&nbsp;Terms</span>
+          </div>
+        </div>
+        <div class="anchor-hint">↑ click to start your run</div>
+      </div>
+
+      <div class="best-strip" id="best-strip" hidden>
+        <span class="best-chip" id="best-chip"></span>
+      </div>
+    </div>
+
+    <div class="how">
+      <div class="how-card">
+        <div class="how-num c-blue">1</div>
+        <h3>Solve 10 grids</h3>
+        <p>Classic “select all images with traffic lights” — drawn from a pool of <b>48 unique challenges</b>, so every run is different.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num c-red">2</div>
+        <h3>Race the clock</h3>
+        <p>One timer for the whole run. A wrong verify means <i>“Please try again”</i> — and the seconds keep bleeding.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num c-green">3</div>
+        <h3>Claim the board</h3>
+        <p>Up to 1,000 points per captcha, decaying with time. Post your score and battle your friends for the top spot.</p>
+      </div>
+    </div>
+
+    <p class="protip">Pro tip — keyboard: <kbd>1</kbd>–<kbd>9</kbd> toggle tiles · <kbd>Enter</kbd> verifies</p>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section class="screen screen-game" id="screen-game" hidden>
+    <div class="challenge-card" id="challenge-card">
+      <div class="challenge-header">
+        <div class="ch-line1">Select all images with</div>
+        <div class="ch-target" id="ch-target">traffic lights</div>
+        <div class="ch-line3">Click verify once there are none left.</div>
+      </div>
+      <div class="challenge-error" id="ch-error" hidden>Please try again.</div>
+      <div class="grid" id="grid"></div>
+      <div class="challenge-bar">
+        <div class="bar-icons">
+          <button class="icon-btn" id="btn-reload" title="Get a new challenge" aria-label="Get a new challenge">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-audio" title="Audio challenge" aria-label="Audio challenge">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 3a9 9 0 0 0-9 9v7a2 2 0 0 0 2 2h3v-8H5v-1a7 7 0 0 1 14 0v1h-3v8h3a2 2 0 0 0 2-2v-7a9 9 0 0 0-9-9z"/></svg>
+          </button>
+          <button class="icon-btn" id="btn-info" title="How scoring works" aria-label="How scoring works">
+            <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          </button>
+        </div>
+        <button class="verify-btn" id="btn-verify">Verify</button>
+      </div>
+    </div>
+    <p class="protip protip-game">Keyboard: <kbd>1</kbd>–<kbd>9</kbd> select · <kbd>Enter</kbd> verify · <kbd>R</kbd> new challenge</p>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="screen screen-results" id="screen-results" hidden>
+    <div class="results-card">
+      <div class="results-verified">
+        <span class="big-check">
+          <svg viewBox="0 0 52 52" width="64" height="64"><circle cx="26" cy="26" r="25" fill="none" stroke="#34a853" stroke-width="2.5" class="check-circle"/><path fill="none" stroke="#34a853" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14 27l8 8 16-17" class="check-mark"/></svg>
+        </span>
+        <h2>Verification complete</h2>
+        <p class="results-human">You are <b>probably</b> human.</p>
+      </div>
+
+      <div class="results-numbers">
+        <div class="rn">
+          <div class="rn-value" id="res-time">0:00.0</div>
+          <div class="rn-label">Total time</div>
+        </div>
+        <div class="rn rn-score">
+          <div class="rn-value c-blue" id="res-score">0</div>
+          <div class="rn-label">Score</div>
+        </div>
+        <div class="rn">
+          <div class="rn-value" id="res-acc">100%</div>
+          <div class="rn-label">Accuracy</div>
+        </div>
+      </div>
+
+      <div class="results-flags" id="res-flags"></div>
+
+      <div class="breakdown" id="breakdown"></div>
+
+      <form class="save-row" id="save-form">
+        <input type="text" id="player-name" maxlength="16" placeholder="Your name" autocomplete="off" spellcheck="false" required>
+        <button type="submit" class="filled-btn">Save score</button>
+      </form>
+      <div class="results-actions">
+        <button class="text-btn" data-nav="home">Home</button>
+        <button class="outline-btn" id="btn-again">Run it back</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEADERBOARD ============ -->
+  <section class="screen screen-board" id="screen-board" hidden>
+    <div class="board-card">
+      <div class="board-head">
+        <h2>Leaderboard</h2>
+      </div>
+      <div class="board-stats" id="board-stats"></div>
+      <table class="board-table" id="board-table">
+        <thead><tr><th class="th-rank">#</th><th>Name</th><th class="th-num">Score</th><th class="th-num">Time</th><th class="th-num">Accuracy</th><th class="th-date">Date</th></tr></thead>
+        <tbody id="board-body"></tbody>
+      </table>
+      <div class="board-empty" id="board-empty" hidden>
+        <p>No runs yet. The board is wide open.</p>
+        <button class="filled-btn" data-nav="home">Be the first</button>
+      </div>
+      <div class="board-actions">
+        <button class="text-btn danger" id="btn-clear-board">Clear leaderboard</button>
+        <button class="filled-btn" data-nav="home">Play</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>All imagery is hand-drawn SVG · zero photos, zero tracking, zero backend</span>
+  <span class="footer-dot">·</span>
+  <span>A parody. Not affiliated with Google or reCAPTCHA.</span>
+</footer>
+
+<div class="snackbar" id="snackbar" role="status"></div>
+<div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+
+<script src="scenes.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
